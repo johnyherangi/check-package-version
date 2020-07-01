@@ -20,6 +20,7 @@
   "dependencies": {
     "@actions/core": "^1.1.0",
     "@actions/github": "^1.1.0",
-    "npmview": "0.0.4"
+    "npmview": "0.0.4",
+    "semver": "^7.3.2"
   }
 }
