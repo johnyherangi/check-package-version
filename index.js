@@ -1,15 +1,29 @@
 const core = require('@actions/core');
-const github = require('@actions/github');
+
+const npmview = require('npmview');
+const semver = require('semver');
 
 try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
-  const time = (new Date()).toTimeString();
-  core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
+    const pkgName = require('./package.json').name;
+    const pkgVersion = require('./package.json').version;
+
+    // get latest version on npm
+    npmview(pkgName, function(error, version, _moduleInfo) {
+        if (error) {            
+            core.setFailed(error.message);
+            return
+        }
+
+        if (version === undefined) {
+            core.setOutput("No existing package versions found")
+        }
+
+        // compare to local version
+        if(semver.gt(version, pkgVersion)) {
+            // remote version on npm is newer than current version
+            core.setFailed(`Latest package version ${version} is newer than the current package version ${pkgVersion}`);
+        }
+    });
 } catch (error) {
-  core.setFailed(error.message);
+    core.setFailed(error.message);
 }

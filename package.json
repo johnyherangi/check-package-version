@@ -1,10 +1,10 @@
 {
-  "name": "hello-world-javascript-action",
+  "name": "check-package-version",
   "version": "1.0.0",
-  "description": "This action prints \"Hello World\" or \"Hello\" + the name of a person to greet to the log.",
+  "description": "This action checks that a package's current version is new than any existing package versions.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/actions/hello-world-javascript-action#readme",
   "dependencies": {
     "@actions/core": "^1.1.0",
-    "@actions/github": "^1.1.0"
+    "@actions/github": "^1.1.0",
+    "npmview": "0.0.4"
   }
 }
