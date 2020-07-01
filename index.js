@@ -1,32 +1,7 @@
 const core = require('@actions/core');
 
 const npmview = require('npmview');
-
-function parseVersion(version) {
-    const [major, minor, patch] = version
-        .split(".")
-        .map(v => isNaN(v) ? v : new Number(v))
-    return {
-        major: major || 0,
-        minor: minor || 0,
-        patch: patch || 0
-    }
-}
-
-function greaterThan(left, right) {
-    left = parseVersion(left)
-    right = parseVersion(right)
-
-    if (left.major < right.major) {
-        return false
-    }
-
-    if (left.minor < right.minor) {
-        return false
-    }
-
-    return left.patch > right.patch
-}
+const semver = require('npmview');
 
 try {
     const pkgName = require('./package.json').name;
@@ -47,7 +22,7 @@ try {
         console.log(pkgVersion)
 
         // compare to local version
-        if(greaterThan(version, pkgVersion)) {
+        if(semver.gt(version, pkgVersion)) {
             // remote version on npm is newer than current version
             core.setFailed(`Latest package version ${version} is newer than the current package version ${pkgVersion}`);
         }
