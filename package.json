@@ -1,7 +1,7 @@
 {
   "name": "check-package-version",
   "version": "1.0.0",
-  "description": "This action checks that a package's current version is new than any existing package versions.",
+  "description": "This action checks that a package's current version is newer than any existing package versions.",
   "main": "index.js",
   "scripts": {
     "test": "node index.js"

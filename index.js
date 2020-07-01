@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 
 const npmview = require('npmview');
-const semver = require('npmview');
+const semver = require('semver');
 
 try {
     const pkgName = require('./package.json').name;
